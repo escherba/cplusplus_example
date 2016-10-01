@@ -1,4 +1,4 @@
-Reference CLI Project for C_++ Development
+Reference CLI Project for C++ Development
 -----------------------------------------
 
 WIP

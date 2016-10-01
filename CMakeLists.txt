@@ -1,14 +1,22 @@
+include(ExternalProject)
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-project(gflags-example CXX)
+project(cplusplus_example CXX)
 
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
-if (EXISTS "${PROJECT_SOURCE_DIR}/gflags/CMakeLists.txt")
-  add_subdirectory(gflags)
-else ()
-  find_package(gflags REQUIRED)
-endif ()
+# if (EXISTS "${PROJECT_SOURCE_DIR}/gflags/CMakeLists.txt")
+#   add_subdirectory(gflags)
+# else ()
+#   find_package(gflags REQUIRED)
+# endif ()
+
+ExternalProject_Add (gflags
+    GIT_REPOSITORY https://github.com/gflags/gflags.git
+    GIT_TAG v2.1.2
+    UPDATE_DISCONNECTED 1
+    CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext"
+    )
 
 # Always use Boost's shared libraries.
 set(Boost_USE_STATIC_LIBS OFF)
@@ -22,13 +30,16 @@ set(Boost_USE_MULTI_THREADED ON)
 find_package(Boost 1.58.0 REQUIRED COMPONENTS system)
 
 
+set(Gflags_LIBRARIES
+    "./build/ext/lib/libgflags.a"
+    "./build/ext/lib/libgflags_nothreads.a"
+    )
+
 enable_testing()
 
-add_subdirectory(src)
 add_subdirectory(test)
-
-# assign the include directories
-include_directories(${Boost_INCLUDE_DIRS})
+add_subdirectory(src)
+add_subdirectory(src/foo)
 
 
 if (${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
