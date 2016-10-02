@@ -20,7 +20,7 @@ void sample_accumulate(struct basic_stats *stats) {
   acc(11, weight = 1);
   acc(12, weight = 1);
   stats->mean = mean(acc);
-  stats->variance = variance(acC);
+  stats->variance = variance(acc);
 }
 
 int main(int argc, char *argv[])
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   gflags::ShutDownCommandLineFlags();
 
   basic_stats stats;
-  sample_accumulate(*stats);
+  sample_accumulate(&stats);
 
   std::cout << stats.mean << '\n';
   std::cout << stats.variance << '\n';
