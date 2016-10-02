@@ -34,7 +34,7 @@ find_package(Boost 1.58.0 REQUIRED COMPONENTS system)
 
 
 set(Gflags_LIBRARIES
-    "/home/escherba/dev/cplusplus/cplusplus_example/cli_tool/build/ext/lib/libgflags.a"
+    "${CMAKE_BINARY_DIR}/ext/lib/libgflags.a"
     )
 
 enable_testing()
