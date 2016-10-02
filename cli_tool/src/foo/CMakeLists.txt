@@ -1,5 +1,4 @@
 include_directories(
-    "${CMAKE_SOURCE_DIR}/include"
     "${CMAKE_SOURCE_DIR}/src/include"
     )
 add_executable(foo foo.cc)
