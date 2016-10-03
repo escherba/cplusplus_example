@@ -52,3 +52,6 @@ test 1
     1: [==========] 4 tests from 2 test cases ran. (0 ms total)
     1: [  PASSED  ] 4 tests.
     1/1 Test #1: test .............................   Passed    0.00 sec
+    100% tests passed, 0 tests failed out of 1
+
+    Total Test time (real) =   0.00 sec
