@@ -6,7 +6,7 @@ add_custom_target(check ${CMAKE_CTEST_COMMAND} -V)
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}-test)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
     ${Gflags_INCLUDE_DIRS}
     ${Gtest_INCLUDE_DIRS}
     )
