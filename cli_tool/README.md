@@ -6,7 +6,7 @@ About
 The CLI tool is a simple reference project designed to be run from a command line.
 It demonstrates the use of CMake as build tool, Boost as external dependency, 
 Gflags and GoogleTeset as external dependencies that are optionally downloaded and compiled during the build process,
-and GoogleTest as the main testing framework.
+and GoogleTest as the main testing framework. Doxygen is used for documentation (integrated with CMake).
 
 
 
