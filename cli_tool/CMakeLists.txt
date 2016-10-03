@@ -35,6 +35,7 @@ else()
     # Local gflags setup has been found (this will result in 'gflags'
     # variable being set)
     message("using local installation of gflags")
+    set(Gflags_LIBRARIES gflags)
 endif()
 
 
