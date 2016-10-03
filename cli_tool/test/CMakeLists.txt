@@ -1,5 +1,7 @@
 
 enable_testing()
+add_custom_target(check ${CMAKE_CTEST_COMMAND} -V)
+
 
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}-test)
 
