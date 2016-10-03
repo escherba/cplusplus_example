@@ -33,6 +33,8 @@ else()
             -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
             -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext
         )
+    ExternalProject_Get_Property(Gflags source_dir)
+    set(Gflags_INCLUDE_DIRS "${source_dir}/include")
     set(Gflags_LIBRARIES
         "${CMAKE_BINARY_DIR}/ext/lib/libgflags.a"
         )
@@ -61,8 +63,10 @@ else()
     # so we disable "make install" step by setting INSTALL_COMMAND
     # to an empty string and link directly to the library in the build directory
     ExternalProject_Get_Property(Gtest binary_dir)
+    ExternalProject_Get_Property(Gtest source_dir)
     add_library(gtest      UNKNOWN IMPORTED)
     add_library(gtest_main UNKNOWN IMPORTED)
+    set(Gtest_INCLUDE_DIRS "${source_dir}/include")
     set_target_properties(gtest PROPERTIES
         IMPORTED_LOCATION ${binary_dir}/libgtest.a
     )

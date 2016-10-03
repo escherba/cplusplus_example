@@ -1,5 +1,6 @@
 include_directories(
-    "${CMAKE_SOURCE_DIR}/src/include"
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${Gflags_INCLUDE_DIRS}
     )
 add_executable(foo acc.cc foo.cc)
 target_compile_features(foo PRIVATE cxx_range_for)

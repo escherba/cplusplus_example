@@ -4,7 +4,9 @@ enable_testing()
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}-test)
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/src/include"
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${Gflags_INCLUDE_DIRS}
+    ${Gtest_INCLUDE_DIRS}
     )
 
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cc)
