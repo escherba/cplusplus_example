@@ -1,7 +1,8 @@
 include(ExternalProject)
+set(PROJECT_NAME_STR cplusplus_example)
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-project(cplusplus_example CXX)
+project(${PROJECT_NAME_STR} CXX)
 
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
@@ -14,6 +15,7 @@ project(cplusplus_example CXX)
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 find_package(Threads REQUIRED)
 
+# sudo apt install libgflags-dev
 find_package(Gflags QUIET)
 if (Gflags_FOUND)
     # Local gflags setup has been found ('gflags' variable is set)
@@ -34,6 +36,34 @@ else()
         )
 endif()
 
+# sudo apt install libgtest-dev
+find_package(Gtest QUIET)
+if (Gtest_FOUND)
+    # Local gtest setup has been found ('gtest' variable is set)
+    message("using local installation of gtest")
+    set(Gtest_LIBRARIES gtest)
+else()
+    # for some reason, on Ubuntu, cmake doesn't find local gfalgs
+    # (but does find it on Mac OS X)
+    message("did not find gtest: will download and build from source")
+    ExternalProject_Add (gtest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG release-1.7.0
+        UPDATE_DISCONNECTED 1
+        INSTALL_DIR "${CMAKE_BINARY_DIR}/ext"
+        INSTALL_COMMAND cmake -E echo "Skipping install step"
+        CMAKE_ARGS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext"
+        )
+    # for some reason, "install" target is not createed by CMake,
+    # so we disable "make install" step by setting INSTALL_COMMAND
+    # to an empty string and link directly to the library in the build directory
+    set(Gtest_LIBRARIES
+        ${CMAKE_BINARY_DIR}/gtest-prefix/src/gtest-build/libgtest.a
+        ${CMAKE_BINARY_DIR}/gtest-prefix/src/gtest-build/libgtest_main.a
+        )
+endif()
+
+
 
 # Always use Boost's shared libraries.
 set(Boost_USE_STATIC_LIBS OFF)
@@ -47,8 +77,6 @@ set(Boost_USE_MULTI_THREADED ON)
 find_package(Boost 1.58.0 REQUIRED COMPONENTS system)
 
 
-
-enable_testing()
 
 add_subdirectory(test)
 add_subdirectory(src)

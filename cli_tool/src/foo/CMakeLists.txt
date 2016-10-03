@@ -1,7 +1,7 @@
 include_directories(
     "${CMAKE_SOURCE_DIR}/src/include"
     )
-add_executable(foo foo.cc)
+add_executable(foo acc.cc foo.cc)
 target_compile_features(foo PRIVATE cxx_range_for)
 target_link_libraries(foo ${Gflags_LIBRARIES})
 target_link_libraries(foo ${Boost_LIBRARIES})
