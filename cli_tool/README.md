@@ -16,7 +16,11 @@ This project uses typical cmake out-of-source build pattern:
     cmake ..
     make
 
+After building, you can run the tests either by running the test executable or, in the build directory, by issuing:
 
+    make check
+    
+    
 Testing
 -------
 
