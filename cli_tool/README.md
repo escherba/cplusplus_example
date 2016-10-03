@@ -16,11 +16,14 @@ This project uses typical cmake out-of-source build pattern:
     cmake ..
     make
 
-
 Testing
 -------
 
-In the build directory, run ``make check``. The output should look something like the following:
+After building, you can run the tests either by running the test executable or, in the build directory, by issuing:
+
+    make check
+    
+The output should look something like the following:
 
 test 1
     Start 1: test
@@ -42,9 +45,13 @@ test 1
     1: [       OK ] cpp_sorter_test.char_arr_sort (0 ms)
     1: [ RUN      ] cpp_sorter_test.int_arr_sort
     1: [       OK ] cpp_sorter_test.int_arr_sort (0 ms)
-     : [----------] 3 tests from cpp_sorter_test (0 ms total)
+    1: [----------] 3 tests from cpp_sorter_test (0 ms total)
     1: 
     1: [----------] Global test environment tear-down
     1: [==========] 4 tests from 2 test cases ran. (0 ms total)
     1: [  PASSED  ] 4 tests.
     1/1 Test #1: test .............................   Passed    0.00 sec
+    
+    100% tests passed, 0 tests failed out of 1
+
+    Total Test time (real) =   0.00 sec
