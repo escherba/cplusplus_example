@@ -15,27 +15,23 @@ set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 find_package(Threads REQUIRED)
 
 find_package(Gflags QUIET)
-
-if (NOT Gflags_FOUND)
+if (Gflags_FOUND)
+    # Local gflags setup has been found ('gflags' variable is set)
+    message("using local installation of gflags")
+    set(Gflags_LIBRARIES gflags)
+else()
     # for some reason, on Ubuntu, cmake doesn't find local gfalgs
     # (but does find it on Mac OS X)
     message("did not find gflags: will download and build from source")
-
     ExternalProject_Add (gflags
         GIT_REPOSITORY https://github.com/gflags/gflags.git
         GIT_TAG v2.1.2
         UPDATE_DISCONNECTED 1
         CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext"
         )
-
     set(Gflags_LIBRARIES
         "${CMAKE_BINARY_DIR}/ext/lib/libgflags.a"
         )
-else()
-    # Local gflags setup has been found (this will result in 'gflags'
-    # variable being set)
-    message("using local installation of gflags")
-    set(Gflags_LIBRARIES gflags)
 endif()
 
 
