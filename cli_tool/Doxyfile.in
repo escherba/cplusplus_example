@@ -9,3 +9,4 @@ FILE_PATTERNS          = *.h \
                          *.cc
 RECURSIVE              = YES
 USE_MDFILE_AS_MAINPAGE = @doxy_main_page@
+EXCLUDE_PATTERNS       = */build/*-prefix/* */ext/include/*
