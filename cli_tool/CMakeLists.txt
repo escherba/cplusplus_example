@@ -25,7 +25,7 @@ else()
     # for some reason, on Ubuntu, cmake doesn't find local gfalgs
     # (but does find it on Mac OS X)
     message("did not find gflags: will download and build from source")
-    ExternalProject_Add (gflags
+    ExternalProject_Add (Gflags
         GIT_REPOSITORY https://github.com/gflags/gflags.git
         GIT_TAG v2.1.2
         UPDATE_DISCONNECTED 1
