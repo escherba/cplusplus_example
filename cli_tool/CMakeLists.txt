@@ -29,7 +29,9 @@ else()
         GIT_REPOSITORY https://github.com/gflags/gflags.git
         GIT_TAG v2.1.2
         UPDATE_DISCONNECTED 1
-        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext"
+        CMAKE_ARGS
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext
         )
     set(Gflags_LIBRARIES
         "${CMAKE_BINARY_DIR}/ext/lib/libgflags.a"
@@ -41,26 +43,33 @@ find_package(Gtest QUIET)
 if (Gtest_FOUND)
     # Local gtest setup has been found ('gtest' variable is set)
     message("using local installation of gtest")
-    set(Gtest_LIBRARIES gtest)
+    set(Gtest_LIBRARIES gtest gtest_main)
 else()
     # for some reason, on Ubuntu, cmake doesn't find local gfalgs
     # (but does find it on Mac OS X)
     message("did not find gtest: will download and build from source")
-    ExternalProject_Add (gtest
+    ExternalProject_Add (Gtest
         GIT_REPOSITORY https://github.com/google/googletest.git
         GIT_TAG release-1.7.0
         UPDATE_DISCONNECTED 1
-        INSTALL_DIR "${CMAKE_BINARY_DIR}/ext"
         INSTALL_COMMAND cmake -E echo "Skipping install step"
-        CMAKE_ARGS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext"
+        CMAKE_ARGS
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext
         )
     # for some reason, "install" target is not createed by CMake,
     # so we disable "make install" step by setting INSTALL_COMMAND
     # to an empty string and link directly to the library in the build directory
-    set(Gtest_LIBRARIES
-        ${CMAKE_BINARY_DIR}/gtest-prefix/src/gtest-build/libgtest.a
-        ${CMAKE_BINARY_DIR}/gtest-prefix/src/gtest-build/libgtest_main.a
-        )
+    ExternalProject_Get_Property(Gtest binary_dir)
+    add_library(gtest      UNKNOWN IMPORTED)
+    add_library(gtest_main UNKNOWN IMPORTED)
+    set_target_properties(gtest PROPERTIES
+        IMPORTED_LOCATION ${binary_dir}/libgtest.a
+    )
+    set_target_properties(gtest_main PROPERTIES
+        IMPORTED_LOCATION ${binary_dir}/libgtest_main.a
+    )
+    set(Gtest_LIBRARIES gtest gtest_main)
 endif()
 
 
