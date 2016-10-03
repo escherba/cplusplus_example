@@ -12,7 +12,7 @@ DEFINE_string(message, "Hello world!", "Message to print");
 using namespace boost::accumulators;
 
 
-void sample_accumulate(struct basic_stats *stats) {
+void sample_accumulate(basic_stats *stats) {
   accumulator_set<double, features<tag::mean, tag::variance>, int> acc;
   acc(8, weight = 1);
   acc(9, weight = 1);

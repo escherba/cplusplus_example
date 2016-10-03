@@ -14,12 +14,25 @@ project(cplusplus_example CXX)
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 find_package(Threads REQUIRED)
 
-ExternalProject_Add (gflags
-    GIT_REPOSITORY https://github.com/gflags/gflags.git
-    GIT_TAG v2.1.2
-    UPDATE_DISCONNECTED 1
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext
-    )
+find_package(Gflags QUIET)
+
+if (NOT Gflags_FOUND)
+    message("did not find gflags: will download and build from source")
+
+    ExternalProject_Add (gflags
+        GIT_REPOSITORY https://github.com/gflags/gflags.git
+        GIT_TAG v2.1.2
+        UPDATE_DISCONNECTED 1
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/ext
+        )
+
+    set(Gflags_LIBRARIES
+        "${CMAKE_BINARY_DIR}/ext/lib/libgflags.a"
+        )
+else()
+    message("using local installation of gflags")
+endif()
+
 
 # Always use Boost's shared libraries.
 set(Boost_USE_STATIC_LIBS OFF)
@@ -33,9 +46,6 @@ set(Boost_USE_MULTI_THREADED ON)
 find_package(Boost 1.58.0 REQUIRED COMPONENTS system)
 
 
-set(Gflags_LIBRARIES
-    "${CMAKE_BINARY_DIR}/ext/lib/libgflags.a"
-    )
 
 enable_testing()
 
