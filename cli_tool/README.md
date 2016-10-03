@@ -46,7 +46,7 @@ test 1
     1: [       OK ] cpp_sorter_test.char_arr_sort (0 ms)
     1: [ RUN      ] cpp_sorter_test.int_arr_sort
     1: [       OK ] cpp_sorter_test.int_arr_sort (0 ms)
-     : [----------] 3 tests from cpp_sorter_test (0 ms total)
+    1: [----------] 3 tests from cpp_sorter_test (0 ms total)
     1: 
     1: [----------] Global test environment tear-down
     1: [==========] 4 tests from 2 test cases ran. (0 ms total)
