@@ -1,11 +1,12 @@
 #include <iostream>
 #include <gflags/gflags.h>
-
+#include <boost/filesystem.hpp>
 #include "acc.h"
 
 
 DEFINE_bool(verbose, false, "Display program name before message");
 DEFINE_string(message, "Hello world!", "Message to print");
+DEFINE_string(infile, "-", "file");
 
 
 int main(int argc, char *argv[])
@@ -17,6 +18,9 @@ int main(int argc, char *argv[])
     std::cout << FLAGS_message << std::endl;
     gflags::ShutDownCommandLineFlags();
 
+    std::string file_ext = boost::filesystem::extension(FLAGS_infile);
+
+    std::cout << "extension was: " << file_ext << std::endl;
     basic_stats stats;
     sample_accumulate(&stats);
 
